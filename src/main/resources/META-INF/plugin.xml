@@ -1,0 +1,33 @@
+<idea-plugin>
+    <id>khlopotov.ai.jmh-support</id>
+    <name>JMHSupport</name>
+    <vendor email="akhlopotov@list.com">Khlopotov Alexander</vendor>
+
+    <description><![CDATA[
+<b>Provides advanced support for JMH framework:</b><br>
+- JMH project template<br>
+- Running benchmarks via gutter icons<br>
+- Creating benchmark template
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.idea.maven</depends>
+
+    <!-- Minimum and maximum build of IDE compatible with the plugin -->
+    <idea-version since-build="201" until-build="201.*"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectTemplatesFactory implementation="khlopotov.ai.project.templates.JMHTemplateFactory"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="khlopotov.ai.highlighting.ClassWithBenchmarkLineMarkerProvider"/>
+        <configurationType implementation="khlopotov.ai.run.configuration.JmhConfigurationType"/>
+        <postStartupActivity implementation="khlopotov.ai.CanShowGuttersActivity"/>
+    </extensions>
+
+    <actions>
+        <action id="Test.Action" class="khlopotov.ai.actions.CreateNewBenchmarkFileAction" text="Benchmark Class">
+            <add-to-group group-id="NewGroup" relative-to-action="NewFromTemplate" anchor="before"/>
+        </action>
+    </actions>
+</idea-plugin>
